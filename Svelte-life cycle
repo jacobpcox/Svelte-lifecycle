@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Svelte Documentation Summary</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap"
+            rel="stylesheet" />
+        <style>
+            /* Base theme styles */
+            :root {
+                --primary-color: #4a90e2; /* Primary color */
+                --accent-color: #ffc107; /* Accent color for links */
+                --font-body: "Open Sans", sans-serif;
+                --item-count: 6; /* Total number of sections */
+                --radius: 40vh; /* Radius of the circle relative to the viewport height */
+                --section-size: 17em; /* Fixed size for sections */
+                --ring-opacity: 0.5; /* Opacity for light theme ring */
+                --ring-stroke-width: 2; /* Stroke width for the ring */
+            }
+
+            /* Light theme styles (default) */
+            :root {
+                --background-color: #f5f5f5; /* Light background color */
+                --text-color: #333; /* Light text color */
+                --box-shadow: 0 0.25em 0.5em rgba(0, 0, 0, 0.1); /* Shadow for light theme */
+            }
+
+            /* Dark theme styles */
+            @media (prefers-color-scheme: dark) {
+                :root {
+                    --background-color: #121212; /* Dark background color */
+                    --text-color: #e0e0e0; /* Dark text color */
+                    --box-shadow: 0 0.25em 0.5em rgba(255, 255, 255, 0.1); /* Shadow for dark theme */
+                    --ring-opacity: 0.8; /* Opacity for dark theme ring */
+                }
+            }
+
+            /* Common styles */
+            body {
+                font-family: var(--font-body);
+                margin: 0;
+                padding: 1.25em;
+                background-color: var(--background-color);
+                color: var(--text-color);
+                transition: background-color 0.3s, color 0.3s;
+            }
+            .container {
+                position: relative;
+                width: 90vw; /* Width relative to the viewport width */
+                height: 90vh; /* Height relative to the viewport height */
+                margin: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            section {
+                position: absolute;
+                width: var(--section-size); /* Fixed width */
+                height: var(--section-size); /* Fixed height */
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                background-color: var(--background-color);
+                padding: 1em; /* Scalable padding */
+                border-radius: 0.625em; /* Scalable border radius */
+                box-shadow: var(--box-shadow);
+                overflow: hidden;
+                box-sizing: border-box; /* Include padding and border in the element's total width and height */
+                padding-bottom: 2em;
+            }
+            h1 {
+                text-align: center;
+                color: var(--primary-color);
+                margin-bottom: 2.5em; /* Scalable bottom margin */
+            }
+            h2 {
+                color: var(--primary-color);
+                margin-bottom: 0.5em; /* Scalable bottom margin */
+                word-wrap: break-word;
+            }
+            .link {
+                display: inline-block;
+                padding: 0.5em 1em;
+                margin: 1em 0;
+                background-color: var(--accent-color);
+                color: var(--background-color);
+                border: none;
+                border-radius: 0.5em;
+                text-align: center;
+                text-decoration: none;
+                font-weight: bold;
+                transition: background-color 0.3s ease;
+            }
+
+            .link:hover {
+                background-color: darken(var(--accent-color), 10%);
+                color: var(--accent-color);
+                border: 2px solid var(--accent-color);
+                cursor: pointer;
+            }
+            .description {
+                word-wrap: break-word;
+                margin: 0 1em; /* Margin on the sides */
+            }
+
+            /* Dynamic positioning */
+            section:nth-child(n) {
+                transform: rotate(
+                        calc(360deg / var(--item-count) * (var(--i) - 1))
+                    )
+                    translate(var(--radius))
+                    rotate(calc(-360deg / var(--item-count) * (var(--i) - 1)));
+            }
+
+            /* Styles for the SVG circle */
+            .circle-container {
+                position: absolute;
+                width: calc(var(--radius) * 2);
+                height: calc(var(--radius) * 2);
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                z-index: -1; /* Place the SVG behind the sections */
+            }
+
+            .ring {
+                stroke: var(--primary-color);
+                fill: none;
+                stroke-width: var(--ring-stroke-width);
+                opacity: var(--ring-opacity);
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Svelte Lifecycle</h1>
+            <div class="circle-container">
+                <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+                    <circle cx="50" cy="50" r="49" class="ring" />
+                </svg>
+            </div>
+        </div>
+        <script>
+            const JSON = {
+                lifecycleFunctions: [
+                    {
+                        name: "onMount",
+                        description: "Callback for when the component mounts.",
+                        order: 1,
+                        documentationLink:
+                            "https://svelte.dev/docs/svelte#onmount",
+                    },
+                    {
+                        name: "beforeUpdate",
+                        description:
+                            "Callback to run before the component updates.",
+                        order: 2,
+                        documentationLink:
+                            "https://svelte.dev/docs/svelte#beforeupdate",
+                    },
+                    {
+                        name: "afterUpdate",
+                        description:
+                            "Callback to run after the component updates.",
+                        order: 3,
+                        documentationLink:
+                            "https://svelte.dev/docs/svelte#afterupdate",
+                    },
+                    {
+                        name: "onDestroy",
+                        description:
+                            "Callback to run when the component is unmounted.",
+                        order: 4,
+                        documentationLink:
+                            "https://svelte.dev/docs/svelte#ondestroy",
+                    },
+                    {
+                        name: "tick",
+                        description:
+                            "Promise that resolves once state changes are applied.",
+                        order: 5,
+                        documentationLink:
+                            "https://svelte.dev/docs/svelte#tick",
+                    },
+                    {
+                        name: "createEventDispatcher",
+                        description:
+                            "Creates a dispatcher for component events.",
+                        order: "Variable",
+                        documentationLink:
+                            "https://svelte.dev/docs/svelte#createeventdispatcher",
+                    },
+                ],
+            };
+
+            function createSection(data, order) {
+                const section = document.createElement("section");
+                section.style.setProperty("--i", order);
+
+                const h2 = document.createElement("h2");
+                h2.textContent = `${data.order} - ${data.name}`;
+                section.appendChild(h2);
+
+                const p = document.createElement("p");
+                p.className = "description";
+                p.textContent = data.description;
+                section.appendChild(p);
+
+                const a = document.createElement("a");
+                a.href = data.documentationLink;
+                a.className = "link";
+                a.textContent = "Read Documentation";
+                section.appendChild(a);
+
+                return section;
+            }
+
+            function insertSections(data) {
+                const container = document.querySelector(".container");
+                let order = 1;
+
+                data.lifecycleFunctions.forEach(function (func) {
+                    container.appendChild(createSection(func, order++));
+                });
+
+                data.contextAPI.forEach(function (api) {
+                    container.appendChild(createSection(api, order++));
+                });
+
+                // Event Dispatching is a single object, not an array
+                container.appendChild(
+                    createSection(data.eventDispatching, "Variable")
+                );
+            }
+
+            insertSections(JSON);
+
+            document.querySelectorAll("section").forEach((section, index) => {
+                section.style.setProperty("--i", index + 1);
+            });
+        </script>
+    </body>
+</html>
